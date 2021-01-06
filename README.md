@@ -1,6 +1,9 @@
 AnsibleDB - OpenSource
 ============================
-AnsibleDB gives you the ability to quickly collect facts about your server estate and via our API, pull out the information important to you. If you've used puppetDB, the functionality is almost identical. With ansibleDB OpenSource, you can also create dynamic ansible inventories to target specific servers with a specific action.
+Ansibledb_collection gives you the ability to quickly collect facts about your server estate and via our API, pull out the information important to you. If you've used puppetDB, the functionality is almost identical. With ansibleDB OpenSource, you can also create dynamic ansible inventories to target specific servers with a specific action.
+
+You need to first install and setup our ansibledb_api_opensource repo:
+https://github.com/apidb-io/ansibledb_api_opensource
 
 The collection roles are maintained by APIDB LTD
 
@@ -9,14 +12,13 @@ Includes:
  * apidb_localfacts
  * apidb_collect
  * apidb_post
- * ansibleDB-opensource
 
 Usage
 -----
 
 Install the collection locally:
 ````
-$ ansible-galaxy collection install apidb.apidb_collection -p ./collections
+$ ansible-galaxy collection install apidb.ansibledb_opensource -p ./collections
 ````
 
 Requirements
@@ -39,101 +41,9 @@ Dependencies
 
 STEP 1
 ------
-The collection comes in two parts. The first thing you will do it setup ansibleDB-opensource. Follow these instructions:
+You need to first install and setup our ansibledb_api_opensource repo:
 
-<details>
- <summary>AnsibleDB-OpenSource Setup</summary>
-  <p>
-
-# ansibledb-opensource
-
-ansibledb-opensource is way to send data from ansible to an api and then read that data. You will need to install the ansibledb-opensource collection from Ansible galaxy and configure it to point to your API server
-
-This is the API Server that recieves requests from Ansible and also offers an end point to get your data
-
-## Installation
-
-Clone the Repository
-```bash
-$ git clone https://github.com/apidb-io/ansibledb-opensource.git
-$ cd ansibledb-opensource/
-```
-
-Install python3 and requirements (YUM based)
-```bash
-$ yum install python3
-$ pip3 install -r requirements.txt
-```
-
-Install python3 and requirements (APT based)
-```bash
-$ apt install python3 python3-pip
-$ pip3 install -r requirements.txt
-```
-
-#### Install MongoDB Server (Community) from:
-```url
-https://www.mongodb.com/try/download/community
-```
-
-#### Example: Centos 8 (Mongo version 4.4)
-```bash
-wget https://repo.mongodb.org/yum/redhat/8/mongodb-org/4.4/x86_64/RPMS/mongodb-org-server-4.4.3-1.el8.x86_64.rpm
-yum localinstall mongodb-org-server-4.4.3-1.el8.x86_64.rpm
-systemctl start mongod 
-systemctl enable mongod
-systemctl status mongodb
-```
-
-#### Example: Ubuntu 18.04 (Mongo version 3.6)
-```bash
-apt install mongodb
-systemctl enable --now mongodb
-systemctl status mongodb
-```
-
-## Running the Server
-
-```bash
-python3 server.py
-```
-
-## Usage
-
-#### Get Server Versions (using JQ to filter)
-
-Install JQ:
-````
-apt/yum install jq
-````
-
-Now use JQ to pull out the data you want to see.
-```bash
-curl -s http://<URL>/api/servers | jq '[.[] | {name:.ansible_facts.ansible_fqdn, distribution:.ansible_facts.ansible_distribution,  version: .ansible_facts.ansible_distribution_version}]'
-```
-
-## Production
-In order to use this in production, we suggest using uwsgi and something like nginx in front of it.
-
-CentOS 7
-```url
-https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-centos-7
-``` 
-Ubuntu 20
-```url
-https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-20-04
-```
-
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
-
-</p></details>
+https://github.com/apidb-io/ansibledb_api_opensource
 
 
 STEP 2
@@ -144,7 +54,7 @@ STEP 2
   <p>
 
 # Setup fact collection:
-Once AnsibleDB-opensource is setup, go ahead and setup the collection and posting scripts.
+Once Ansibledb_api_opensource is setup, go ahead and setup this repo to start collection and posting facts into ansibledb_api_opensource.
 
 
 Example deployment file
@@ -155,7 +65,7 @@ Create your own ````deploy.yml```` file and add the contents below.
     - name: collect facts
       hosts: all
       collections:
-        - apidb.apidb_collection
+        - apidb.ansibledb_opensource
       tasks:
         - import_role:
             name: apidb_localfacts
@@ -181,12 +91,13 @@ Set-up the group_vars
 Run the following command to add a group_vars/all file and add the TOKEN:
 
  * ````mkdir group_vars````
- * Now add the TOKEN ````vi group_vars/all````
- * Add the following to the file. Your TOKEN can be found on your "profile" page on [the APIDB dashboard](https://app.apidb.io/profile)
- 
+ * Now add the endpoint ````vi group_vars/all````
+ * Add the following to the file.
+
 ````
 ---
-apidb_token: "your-token"
+ansibledb_server: "http://ansibledb_api_IP_Address:5000"
+
 ````
  * Now save the file.
  
@@ -205,25 +116,14 @@ inventory = inventory
 display_skipped_hosts = false
 ````
 
-Security
---------
-We do not collect your secure data. We use "restricted keys" to stop certain fields being sent to APIDB. You have the control to add additional keys or remove the defaults.
-
-<img src="https://raw.githubusercontent.com/apidb-io/apidb-collection/master/apidb_screenshot4.JPG"> 
-
 Intital run
----------
-Now you have the collection downloaded, you can complete the first run to check everything is working and you have connectivity. Once run, your dashboard will display distrubution, kernel, operatingsystem and uptime values.
+-----------
+Now you've setup ansibledb_opensource, run it to check everything is working and you have connectivity.
 
 ````
 ansible-playbook  deploy.yml
 ````
 
-First Fact run complete
------------------------
-You should now have successfully collected the 4 Ansible facts available and can view them on the dashboard. If you click on the servers tab or on one of the servers on the dashboard, you can view specific server information.
-
-The power of APIDB really comes into it's own when you add your own facts. These can be anything from the datacentre a server is in, to the version of a particualr piece of software. If you want to add your own facts, you have two options below.
 
 Adding your own Custom Facts
 ----------------------------
@@ -234,7 +134,8 @@ Use our prepared facts from our [custom_extensions](https://github.com/apidb-io/
 
  * Clone the repo into the same base DIR as our collection: ````git clone https://github.com/apidb-io/custom_extensions.git````
  * Edit the main.yml ````vi custom_extensions/main.yml```` 
- * Un-hash the playbooks you would like to run
+ * Un-hash the playbooks you would like to run. Some fact collections will only work on specific operating system versions.
+
 ````
     - custom_extensions/extensions/tidyup.yml # Cleans out old files
 #    - custom_extensions/extensions/sample_facts.yml # My own loacl fact collection populates the dashboard.
@@ -258,6 +159,7 @@ You're free to add your own playbooks into the same directory once you create it
    * The facts need to be in this format ````key: value````:
 
 **I.E**
+
 ````
 [local_facts]
 cloud: AWS
@@ -266,15 +168,12 @@ AVAIL_ZONE: eu-west-1b
 REGION: eu-west-1
 ````
 
- * Run the playbook as below and the APIDB collection will collect the facts and display them in the dashboard:
+ * Run the playbook as below and  nsibledb_openshift will collect the facts and insert them into the DB. 
 
 ````
 ansible-playbook deploy.yml
 ````
 
-Dashboard
----------
-Check the APIDB dashboard for your new data.
 
 Performance tuning
 ------------------
@@ -286,76 +185,22 @@ If you're running against lots of servers, you can utilise the ````ansible.cfg``
 forks = 20
 ````
 
-Experimental Kubernetes role
----------------------------
-This role is currently under development but is available for you to test.
-Expectations/limitations:
+How to use the  API
+-------------------
+To pull out server and fact information directly from the database. Here are some examples:
 
-<img src="https://raw.githubusercontent.com/apidb-io/apidb-collection/master/kubernetes_cluster.JPG">
+ * Pull out all data:
 
+    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq````
 
- * This role will only run against Bastion host(s) - (A host that can connect to your kubernetes master).
- * Authentication: Currently only support the kubeconfig file (This will need to be updated manually).
- * Username/Password & TOKEN authentication is being developed.
+ * List all servernames, distribution and version:
 
-Manage your kubeconfig files in the ````group_vars/all```` file. Add the location of your kubeconfig file as below. If you have multiple clusters, you can add multiple kubeconfig files.
+    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq '[.[] | {name:.ansible_facts.ansible_fqdn, distribution:.ansible_facts.ansible_distribution,  version: .ansible_facts.ansible_distribution_version}]'````
 
-````
-kubeconfig:
-  - "$HOME/.kube/test-cluster.yml"
-  - "$HOME/.kube/dev-cluster.yml"
-````
-
-To use the Kubernetes role, add the following to the deploy.yml file:
-
-    - name: Sample kubernetes data collection
-      hosts: localhost
-      connection: local
-      gather_facts: false
-      collections:
-        - apidb.apidb_collection
-      tasks:
-        - import_role:
-            name: apidb_kubernetes
-          tags: k8s
-          when: '"k8s" in ansible_run_tags'
-      tags: gather
-
-
-You will need to update the ````hosts:```` to point to your bastion server.
-
-Usage:
-````
-ansible-playbook  deploy.yml --tags=gather,k8s,post
-````
-
-APIDB API
----------
-You also have the option to use the APIDB API to pull out server and fact information directly from the database. Here are some examples:
-
- * Export your APIKEY first (Found on the profile page):
-
-    ````export apikey=1234567891011121314151617````
-
- * Server list:
-
-    ````curl --silent -X GET https://app.apidb.io/api/servers   -H "Authorization: Token $apikey"  -H "Accept:application/json" | jq````
-
- * List all production servers:
-
-    ````curl --silent -X GET https://app.apidb.io/api/facts/environment/production   -H "Authorization: Token $apikey" -H "Accept:application/json" | jq````
-
- * List all production server but only show Servername & Environment:
-
-    ````curl --silent -X GET https://app.apidb.io/api/facts/environment/production   -H "Authorization: Token $apikey" -H "Accept:application/json" | jq '[.servers[] | {name: .fqdn, Env: .factvalue}] | group_by(.fqdn, .factvalue)'````
-
- * Show all CentOS 6.9 servers:
+ * Generate a list of servernames that match a specific fact (in this case ubuntu 18.04):
  
-    ````curl --silent -X GET https://app.apidb.io/api/facts/operatingsystem/"centos 6.9"   -H "Authorization: Token $apikey" -H "Accept:application/json" | jq '[.servers[] | {name: .fqdn, Env: .factvalue}] | group_by(.fqdn, .factvalue)'````
+    ````curl -s http://35.177.212.236:5000/api/servers | jq --arg INPUT "$INPUT" -r '.[] | select(.ansible_facts.ansible_distribution_version | tostring | contains("18.04")) | (.ansible_facts.ansible_fqdn+"\"")'````
 
- * List all T2.small instance types:
-
-    ````curl --silent -X GET https://app.apidb.io/api/facts/instance_type/t2.small   -H "Authorization: Token $apikey" -H "Accept:application/json" | jq '[.servers[] | {name: .fqdn, Env: .factvalue}] | group_by(.fqdn, .factvalue)'````
 
 </p></details>
 

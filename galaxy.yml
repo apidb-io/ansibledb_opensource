@@ -6,7 +6,7 @@
 namespace: apidb
 
 # The name of the collection. Has the same character restrictions as 'namespace'
-name: ansibleDB_opensource
+name: ansibledb_opensource
 
 # The version of the collection. Must be compatible with semantic versioning
 version: 0.1.0
@@ -18,12 +18,13 @@ readme: README.md
 # @nicks:irc/im.site#channel'
 authors:
 - Dennis McCarthy dennis@apidb.io
+- Toby Lockyer toby@apidb.io
 
 
 ### OPTIONAL but strongly recommended
 
 # A short summary description of the collection
-description: ansibleDB_opensource collection to collect, store and retrieve local server fact from mongoDB
+description: ansibleDB_opensource collection will collect and store servers fact in mongoDB
 # Either a single license or a list of licenses for content inside of a collection. Ansible Galaxy currently only
 # accepts L(SPDX,https://spdx.org/licenses/) licenses. This key is mutually exclusive with 'license_file'
 license:
@@ -50,13 +51,13 @@ tags:
 dependencies: {}
 
 # The URL of the originating SCM repository
-repository: https://github.com/apidb-io/ansibleDB.git
+repository: https://github.com/apidb-io/ansibledb_opensource.git
 
 # The URL to any online docs
-documentation: https://github.com/apidb-io/ansibleDB/blob/master/README.md
+documentation: https://github.com/apidb-io/ansibledb_opensource/blob/main/README.md
 
 # The URL to the homepage of the collection/project
 homepage: https://apidb.io
 
 # The URL to the collection issue tracker
-issues: https://github.com/apidb-io/ansibleDB/issues
+issues: https://github.com/apidb-io/ansibledb_opensource/issues

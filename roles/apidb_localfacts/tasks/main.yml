@@ -1,0 +1,7 @@
+---
+# This playbook allows you to run custom  playbooks
+
+- name: loading Custom Plays
+  include: "{{ item }}"
+  with_fileglob:
+    - "{{ lookup('env', 'PWD') }}/custom_extensions/*.yml"

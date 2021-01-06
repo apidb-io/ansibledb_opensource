@@ -1,0 +1,13 @@
+---
+# tasks file for apidb_post
+
+- name: Post to API
+  apidb:
+    apidbtoken:  "{{ apidb_token }}"
+  register: result
+#  delegate_to: localhost
+
+- name: debug
+  debug:
+    var: result
+

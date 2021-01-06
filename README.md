@@ -49,10 +49,6 @@ https://github.com/apidb-io/ansibledb_api_opensource
 STEP 2
 ------
 
-<details>
- <summary>Setup fact collection</summary>
-  <p>
-
 # Setup fact collection:
 Once Ansibledb_api_opensource is setup, go ahead and setup this repo to start collection and posting facts into ansibledb_api_opensource.
 
@@ -201,8 +197,6 @@ To pull out server and fact information directly from the database. Here are som
  
     ````curl -s http://35.177.212.236:5000/api/servers | jq --arg INPUT "$INPUT" -r '.[] | select(.ansible_facts.ansible_distribution_version | tostring | contains("18.04")) | (.ansible_facts.ansible_fqdn+"\"")'````
 
-
-</p></details>
 
 License
 -------

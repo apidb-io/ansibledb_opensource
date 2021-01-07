@@ -3,9 +3,10 @@ AnsibleDB - OpenSource
 Ansibledb_collection gives you the ability to quickly collect facts about your server estate and via our API, pull out the information important to you. If you've used puppetDB, the functionality is almost identical. With ansibleDB OpenSource, you can also create dynamic ansible inventories to target specific servers with a specific action.
 
 You need to first install and setup our ansibledb_api_opensource repo:
-https://github.com/apidb-io/ansibledb_api_opensource
+[ansibledb_api_opensource repo](https://github.com/apidb-io/ansibledb_api_opensource)
 
-The collection roles are maintained by APIDB LTD
+
+This collection is maintained by APIDB LTD
 
 Includes:
 
@@ -15,7 +16,6 @@ Includes:
 
 Usage
 -----
-
 Install the collection locally:
 ````
 $ ansible-galaxy collection install apidb.ansibledb_opensource -p ./collections
@@ -23,7 +23,6 @@ $ ansible-galaxy collection install apidb.ansibledb_opensource -p ./collections
 
 Requirements
 ------------
-
 Only if your control node is Ubuntu or RHEL/Centos/OEL 8, you may need to install ````python-requests```` to use this collection.
 ````
 $ sudo apt-get install -y python-requests
@@ -35,19 +34,19 @@ $ yum install -y python-requests
 
 Dependencies
 ------------
-
  * Ansible >= 2.7
  * Python >= 2.7
+ * Windows is NOT supported
+
 
 STEP 1
 ------
-You need to first install and setup our ansibledb_api_opensource repo:
-
-https://github.com/apidb-io/ansibledb_api_opensource
+You need to first install and setup our ansibledb_api_opensource repo - [ansibledb_api_opensource repo](https://github.com/apidb-io/ansibledb_api_opensource)
 
 
 STEP 2
 ------
+Once ansibledb_api_opensource is installed and setup, this step will setup the ansibledb_opensource collection from ansible-galaxy which will collect facts from your servers using the ansible **setup** module.
 
 # Setup fact collection:
 Once Ansibledb_api_opensource is setup, go ahead and setup this repo to start collection and posting facts into ansibledb_api_opensource.
@@ -93,9 +92,9 @@ Run the following command to add a group_vars/all file and add the TOKEN:
 ````
 ---
 ansibledb_server: "http://ansibledb_api_IP_Address:5000"
-
 ````
- * Now save the file.
+
+* Now save the file.
  
 ansible.cfg
 -----------
@@ -114,7 +113,7 @@ display_skipped_hosts = false
 
 Intital run
 -----------
-Now you've setup ansibledb_opensource, run it to check everything is working and you have connectivity.
+Now you've setup ansibledb_opensource, run it to check everything is working and you have connectivity. In my exampe, I've added the inventory file to the ansible.cfg file. If you haven't, you'll need to include the inventory file in additon to the command below.
 
 ````
 ansible-playbook  deploy.yml
@@ -125,13 +124,13 @@ Adding your own Custom Facts
 ----------------------------
 We've setup a simple way for your to run you're own custom playbooks to collect facts important to you. Follow this process:
 
-**Option 1**:
-Use our prepared facts from our [custom_extensions](https://github.com/apidb-io/custom_extensions) repo in github.
+### Option 1
+Use our prepared ansible playbooks from our [custom_extensions](https://github.com/apidb-io/custom_extensions) repo in github.
 
  * Clone the repo into the same base DIR as our collection: ````git clone https://github.com/apidb-io/custom_extensions.git````
  * Edit the main.yml ````vi custom_extensions/main.yml```` 
- * Un-hash the playbooks you would like to run. Some fact collections will only work on specific operating system versions.
-
+ * Un-hash the playbooks you would like to run.
+ * Some fact collections will only work on specific operating system versions.
 ````
     - custom_extensions/extensions/tidyup.yml # Cleans out old files
 #    - custom_extensions/extensions/sample_facts.yml # My own loacl fact collection populates the dashboard.
@@ -140,22 +139,20 @@ Use our prepared facts from our [custom_extensions](https://github.com/apidb-io/
 #    - custom_extensions/extensions/sysctl.yml # Add sysctl settings into the dashboard.
 ````
  * Run the playbook as below:
-
 ````
 ansible-playbook deploy.yml
 ````
 
-**Option 2**:
+### Option 2
 You're free to add your own playbooks into the same directory once you create it and they will be picked up when the apidb collection runs.
 
  * In the same base DIR of the collection, create the directory: ````mkdir custom_extensions````
- * Add your own playbooks templates, files etc into this DIR.
+ * Add your own playbooks templates, files, etc into this DIR.
    * To create your own facts, you need to create a file **ON THE REMOTE SERVERS** in ````/tmp/local/<name>.fact```
-   * Add a title to line one like this: ````[fact_name]````
-   * The facts need to be in this format ````key: value````:
+   * Add a title to top of the file. It must be in this format: ````[fact_name]````
+   * The facts listed in the <name.fact> file must to be in this format ````key: value````:
 
-**I.E**
-
+**EXAMPLE**
 ````
 [local_facts]
 cloud: AWS
@@ -164,8 +161,9 @@ AVAIL_ZONE: eu-west-1b
 REGION: eu-west-1
 ````
 
- * Run the playbook as below and  nsibledb_openshift will collect the facts and insert them into the DB. 
-
+ * You're free to collect the facts anyway you wish. Either manually or scripted is fine. All we are looking for is a file in the format above with **key: values**.
+ * Run the playbook as below and  ansibledb_opensource will collect the facts and insert them into the DB.
+ * Test your updates
 ````
 ansible-playbook deploy.yml
 ````
@@ -181,7 +179,7 @@ If you're running against lots of servers, you can utilise the ````ansible.cfg``
 forks = 20
 ````
 
-How to use the  API
+How to use the API
 -------------------
 To pull out server and fact information directly from the database. Here are some examples:
 
@@ -196,6 +194,14 @@ To pull out server and fact information directly from the database. Here are som
  * Generate a list of servernames that match a specific fact (in this case ubuntu 18.04):
  
     ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq --arg INPUT "$INPUT" -r '.[] | select(.ansible_facts.ansible_distribution_version | tostring | contains("18.04")) | (.ansible_facts.ansible_fqdn+"\"")'````
+
+ * if you've generated local facts, access them like this:
+ 
+   ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local'````
+ 
+ * And to get to specific facts:
+ 
+   ````curl -s http://34.244.166.72:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local.local_facts.region'````
 
 
 License

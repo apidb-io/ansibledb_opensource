@@ -3,6 +3,7 @@
 
 - name: Post to API
   apidb:
+    ansibledb_server: "{{ ansibledb_server }}"
   register: result
 
 - name: debug

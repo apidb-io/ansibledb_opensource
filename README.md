@@ -76,7 +76,7 @@ Create your own ````deploy.yml```` file and add the contents below.
       connection: local
       gather_facts: false
       collections:
-        - apidb.apidb_collection
+        - apidb.ansibledb_opensource
       roles:
         - role: apidb_post
           tags: post
@@ -195,7 +195,7 @@ To pull out server and fact information directly from the database. Here are som
 
  * Generate a list of servernames that match a specific fact (in this case ubuntu 18.04):
  
-    ````curl -s http://35.177.212.236:5000/api/servers | jq --arg INPUT "$INPUT" -r '.[] | select(.ansible_facts.ansible_distribution_version | tostring | contains("18.04")) | (.ansible_facts.ansible_fqdn+"\"")'````
+    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq --arg INPUT "$INPUT" -r '.[] | select(.ansible_facts.ansible_distribution_version | tostring | contains("18.04")) | (.ansible_facts.ansible_fqdn+"\"")'````
 
 
 License

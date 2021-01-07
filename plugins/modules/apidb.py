@@ -10,7 +10,7 @@ import subprocess
 
 def sanitiseDict(d):
 
-    sankeys = open("collections/ansible_collections/apidb/apidb_collection/roles/apidb_post/library/keys_to_sanitise.json", 'r').read()
+    sankeys = open("collections/ansible_collections/apidb/ansibledb_opensource/roles/apidb_post/library/keys_to_sanitise.json", 'r').read()
     keys = json.loads(sankeys)
     keys_to_sanitise = keys['keys_to_sanitise']
     for k in keys_to_sanitise:

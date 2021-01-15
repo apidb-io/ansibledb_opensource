@@ -7,6 +7,7 @@
 
 - name: Add facts to a variable
   setup:
+    fact_path: C:/TEMP/facts
   register: setupvar
 
 - name: Store facts indexed by hostname in /tmp/facts

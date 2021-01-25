@@ -36,7 +36,7 @@ Dependencies
 ------------
  * Ansible >= 2.7
  * Python >= 2.7
- * Windows is NOT supported
+ * Tested with ````jq```` version 1.5.1
 
 
 STEP 1
@@ -193,7 +193,7 @@ To pull out server and fact information directly from the database. Here are som
 
  * Generate a list of servernames that match a specific fact (in this case ubuntu 18.04):
  
-    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq --arg INPUT "$INPUT" -r '.[] | select(.ansible_facts.ansible_distribution_version | tostring | contains("18.04")) | (.ansible_facts.ansible_fqdn+"\"")'````
+    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq --arg INPUT "$INPUT" -r '.[] | select(.ansible_facts.ansible_distribution_version | tostring | contains("18.04")) | (.ansible_facts.ansible_fqdn)'````
 
  * if you've generated local facts, access them like this:
  
@@ -201,7 +201,7 @@ To pull out server and fact information directly from the database. Here are som
  
  * And to get to specific facts:
  
-   ````curl -s http://34.244.166.72:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local.local_facts.region'````
+   ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local.local_facts.region'````
 
 
 License

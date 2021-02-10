@@ -5,6 +5,11 @@
     state: directory
   delegate_to: localhost
 
+- name: Create WIndows DIR
+  win_file:
+    path: C:\Temp\facts
+    state: directory
+
 - name: Add facts to a variable
   setup:
     fact_path: C:/TEMP/facts

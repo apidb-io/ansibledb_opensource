@@ -9,7 +9,7 @@ namespace: apidb
 name: ansibledb_opensource
 
 # The version of the collection. Must be compatible with semantic versioning
-version: 0.8.1
+version: 0.8.4
 
 # The path to the Markdown (.md) readme file. This path is relative to the root of the collection
 readme: README.md
@@ -43,6 +43,7 @@ tags:
   - apidb
   - ansibledb
   - infrastructure
+  - discover
 
 # Collections that this collection requires to be installed for it to be usable. The key of the dict is the
 # collection label 'namespace.name'. The value is a version range

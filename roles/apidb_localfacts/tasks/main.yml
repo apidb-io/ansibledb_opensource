@@ -1,7 +1,12 @@
 ---
-# This playbook allows you to run custom  playbooks
+# This playbook allows you to run custom playbooks
 
-- name: loading Custom Plays
-  include: "{{ item }}"
-  with_fileglob:
-    - "{{ lookup('env', 'PWD') }}/custom_extensions/*.yml"
+- name: Check if DIR exists
+  stat:
+    path: "{{ lookup('env', 'PWD') }}/custom_extensions"
+  register: custom_dir
+  delegate_to: localhost
+
+- name: Run Custom collection
+  include_tasks: collections/ansible_collections/apidb/ansibledb_opensource/roles/apidb_localfacts/tasks/collect.yml
+  when: custom_dir.stat.exists and custom_dir.stat.isdir

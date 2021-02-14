@@ -1,0 +1,6 @@
+---
+- name: Run Custom tasks
+  include: "{{ item }}"
+  with_fileglob:
+    - "{{ lookup('env', 'PWD') }}/custom_extensions/*.yml"
+  delegate_to: localhost

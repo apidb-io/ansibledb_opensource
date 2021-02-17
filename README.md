@@ -45,11 +45,8 @@ AnsibleDB can collect Linux, Windows and network device facts. Below you will ge
 
 LINUX & WINDOWS
 ===============
-
-<details>
- <summary>Expand for details:</summary>
-  <p>
-      
+This section explains the windows and Linux setup. Scroll down for Network Devices.
+     
 STEP 1
 ------
 You need to first install and setup our ansibledb_api_opensource repo - [ansibledb_api_opensource repo](https://github.com/apidb-io/ansibledb_api_opensource)
@@ -214,15 +211,11 @@ To pull out server and fact information directly from the database. Here are som
  
    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local.local_facts.region'````
 
-</p></details>
-
 
 NETWORK DEVICES
 ===============
+This section explains how to setup and use network devices.
 
-<details>
- <summary>Expand for details:</summary>
-  <p>
 
 Apidb_net_role gives you the ability to quickly collect facts from your Network Devices and via our API, pull out the information important to you. If you've used puppetDB, the functionality is almost identical. With ansibleDB OpenSource, you can also create dynamic ansible inventories to target specific servers with a specific action.
 
@@ -264,9 +257,10 @@ Dependencies
 
 Each specific Network Device will need to utilise it's own vendors collection. The below deployment file gives an example of using Palo Alto and Cisco devices, but you will need to install the vendor collections, before you can collect the facts. For more information see:
 
-- [Palo Alto](https://paloaltonetworks.github.io/pan-os-ansible/)
-- [Cisco](https://github.com/ansible-collections/cisco.ios)
+- [Palo Alto](https://galaxy.ansible.com/paloaltonetworks/panos)
+- [Cisco](https://galaxy.ansible.com/cisco/ios)
 
+Install the required collection for you device by follwoing the instructions on the links above.
 
 
 Example deployment file
@@ -277,18 +271,10 @@ Create your own ````deploy.yml```` file and add the contents below.
     - name: collect facts
       hosts: all
       collections:
-        - apidb.ansibledb_net
+        - apidb.ansibledb_opensource
       tasks:
         - import_role:
-            name: 
-          tags: facts
-    
-        - import_role:
-            name: apidb_collect
-          tags: collect
-
-        - import_role:
-            name: apidb_collect_net
+            name: apidb_net_role
           tags: collect_net          
     
     - name: Post to APIDB
@@ -332,8 +318,6 @@ Now you've setup ansibledb_net, run it to check everything is working and you ha
 ````
 ansible-playbook  deploy.yml
 ````
-
-</p></details>
 
 
 License

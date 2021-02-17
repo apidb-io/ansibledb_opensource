@@ -212,14 +212,13 @@ To pull out server and fact information directly from the database. Here are som
    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local.local_facts.region'````
 
 
+
 NETWORK DEVICES
 ===============
 This section explains how to setup and use network devices.
 
 
 Apidb_net_role gives you the ability to quickly collect facts from your Network Devices and via our API, pull out the information important to you. If you've used puppetDB, the functionality is almost identical. With ansibleDB OpenSource, you can also create dynamic ansible inventories to target specific servers with a specific action.
-
-Like our sister collection (ansibledb_opensource - for linux and windows), we have seperated our network devices because the data and facts they collect are not the same. Although it's possible to combine ansibledb_opensource and ansibledb_net into one larger collection, it's not advised simple because the datasets are so different.
 
 
 Network Devices
@@ -330,6 +329,5 @@ This role has been create by the APIDB team. Further information and contact is 
 
 Disclaimer
 ----------
-The ansible facts you send to APIDB will be stored in our DB. This will be remote from your company datacentre. Only send facts you are happy to send and make use of the "Resticted Keys" functionality. We also offer an onsite solution where we can setup APIDB within your own Datacentre, removing many security concerns.
+Only send facts you are happy to send and make use of the "Resticted Keys" functionality.
 
-Contact us for pricing and setup information.

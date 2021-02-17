@@ -99,7 +99,7 @@ Run the following command to add a group_vars/all file and add the TOKEN:
 
 ````
 ---
-ansibledb_server: "http://ansibledb_api_IP_Address:5000"
+ansibledb_server: "http://ansibledb_api_IP_Address:5000/api/servers"
 ````
 
 * Now save the file.
@@ -297,7 +297,7 @@ Run the following command to add a group_vars/all file and add the TOKEN:
 
 ````
 ---
-ansibledb_server: "http://ansibledb_api_IP_Address:5000"
+ansibledb_server: "http://ansibledb_api_IP_Address:5000/api/servers"
 ````
 
 * Now save the file.

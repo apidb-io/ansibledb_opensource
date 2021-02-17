@@ -1,0 +1,25 @@
+---
+# tasks file for apidb-collect Palo Alto Firewall
+
+- name: Create custom fact directory
+  file:
+    path: /tmp/facts
+    state: directory
+  delegate_to: localhost
+
+- name: Add Palo panos facts to a variable
+  paloaltonetworks.panos.panos_facts:
+    provider: '{{ primary }}'
+  register: setupvar
+
+- name: debug
+  debug:
+    var: setupvar
+    verbosity: 3
+
+- name: Store facts indexed by hostname in /tmp/facts
+  copy:
+    content: '{{ setupvar }}'
+    dest: /tmp/facts/{{ inventory_hostname }}.yaml
+    mode: 0600
+  delegate_to: localhost

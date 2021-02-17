@@ -281,7 +281,7 @@ Create your own ````deploy.yml```` file and add the contents below.
       connection: local
       gather_facts: false
       collections:
-        - apidb.ansibledb_net
+        - apidb.ansibledb_opensource
       roles:
         - role: apidb_post
           tags: post

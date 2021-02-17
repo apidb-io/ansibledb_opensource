@@ -1,7 +1,7 @@
 galaxy_info:
-  author: your name
-  description: your role description
-  company: your company (optional)
+  author: Dennis McCarthy dennis@apidb.io
+  description: The apidb_localfacts role will collect and store custom Linux and Windows facts
+  company: www.apidb.io
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value

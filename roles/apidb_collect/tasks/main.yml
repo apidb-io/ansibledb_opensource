@@ -1,8 +1,8 @@
 ---
 - name: Run Linux collection
   include_tasks: collections/ansible_collections/apidb/ansibledb_opensource/roles/apidb_collect/tasks/linux.yml
-  when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
+  when: ansible_os_family is defined and ansible_os_family == "RedHat" or ansible_os_family == "Debian"
 
 - name: Run Windows collection
   include_tasks: collections/ansible_collections/apidb/ansibledb_opensource/roles/apidb_collect/tasks/windows.yml
-  when: ansible_os_family == "Windows"
+  when: ansible_os_family is defined and ansible_os_family == "Windows"

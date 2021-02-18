@@ -43,6 +43,8 @@ Deployment
 ----------
 AnsibleDB can collect Linux, Windows and network device facts. Below you will get documentation for either the linux or windows servers, or network devices. Expand the section you wish to set up.
 
+---
+
 LINUX & WINDOWS
 ===============
 This section explains the windows and Linux setup. Scroll down for Network Devices.
@@ -212,6 +214,7 @@ To pull out server and fact information directly from the database. Here are som
    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local.local_facts.region'````
 
 
+---
 
 NETWORK DEVICES
 ===============

@@ -9,7 +9,7 @@ namespace: apidb
 name: ansibledb_opensource
 
 # The version of the collection. Must be compatible with semantic versioning
-version: 0.8.4
+version: 0.8.6
 
 # The path to the Markdown (.md) readme file. This path is relative to the root of the collection
 readme: README.md
@@ -24,7 +24,7 @@ authors:
 ### OPTIONAL but strongly recommended
 
 # A short summary description of the collection
-description: ansibleDB_opensource collection will collect and store servers fact in mongoDB
+description: ansibleDB_opensource collection will collect and store servers fact in ansibleDB
 # Either a single license or a list of licenses for content inside of a collection. Ansible Galaxy currently only
 # accepts L(SPDX,https://spdx.org/licenses/) licenses. This key is mutually exclusive with 'license_file'
 license:

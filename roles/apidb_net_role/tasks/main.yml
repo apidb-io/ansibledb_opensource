@@ -1,0 +1,10 @@
+---
+# tasks file for apidb_collect_net
+
+- name: Run palo collections
+  include_tasks: palo.yml
+  when: ansible_network_os is defined and ansible_network_os == "panos"
+
+- name: Run Cisco collections
+  include_tasks: cisco.yml
+  when: ansible_network_os is defined and ansible_network_os == "ios"

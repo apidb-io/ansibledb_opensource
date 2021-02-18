@@ -318,6 +318,9 @@ Now you've setup ansibledb_net, run it to check everything is working and you ha
 ansible-playbook  deploy.yml
 ````
 
+# Get Model example
+
+````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq '[.[] | {name:.ansible_facts.ansible_net_model}]'````
 
 License
 -------
@@ -335,4 +338,4 @@ Only send facts you are happy to send and make use of the "Resticted Keys" funct
 This role was written and contributed to by the following people:
 
 - [Dennis McCarthy](https://github.com/dmccuk)
-- [Seth Daemen](https://github.com/<github_name>)
+- [Seth Daemen](https://github.com/daemenseth)

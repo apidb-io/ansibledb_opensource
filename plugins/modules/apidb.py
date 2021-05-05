@@ -23,9 +23,7 @@ def sanitiseDict(d):
 
 
 def apidb(directory,p,apiendpoint,filename):
-    API_ENDPOINT = p["ansibledb_server"] + "/api/" + apiendpoint ## this will be http://35.177.212.236:5000 we should actually include http in the param too
-    #API_ENDPOINT = "http://localhost:5000/api/" + apiendpoint
-    headers = {
+    API_ENDPOINT = p["ansibledb_server"] + "/api/" + apiendpoint
         'Content-Type': 'text/json',
         'Accept':'application/json'
      }

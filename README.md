@@ -43,6 +43,8 @@ Deployment
 ----------
 AnsibleDB can collect Linux, Windows and network device facts. Below you will get documentation for either the linux or windows servers, or network devices. Expand the section you wish to set up.
 
+---
+
 LINUX & WINDOWS
 ===============
 This section explains the windows and Linux setup. Scroll down for Network Devices.
@@ -212,6 +214,7 @@ To pull out server and fact information directly from the database. Here are som
    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local.local_facts.region'````
 
 
+---
 
 NETWORK DEVICES
 ===============
@@ -318,6 +321,9 @@ Now you've setup ansibledb_net, run it to check everything is working and you ha
 ansible-playbook  deploy.yml
 ````
 
+# Get Model example
+
+````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq '[.[] | {name:.ansible_facts.ansible_net_model}]'````
 
 License
 -------
@@ -335,4 +341,4 @@ Only send facts you are happy to send and make use of the "Resticted Keys" funct
 This role was written and contributed to by the following people:
 
 - [Dennis McCarthy](https://github.com/dmccuk)
-- [Seth Daemen](https://github.com/<github_name>)
+- [Seth Daemen](https://github.com/daemenseth)

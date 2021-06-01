@@ -24,6 +24,7 @@ def sanitiseDict(d):
 
 def apidb(directory,p,apiendpoint,filename):
     API_ENDPOINT = p["ansibledb_server"] + "/api/" + apiendpoint
+    headers = {
         'Content-Type': 'text/json',
         'Accept':'application/json'
      }

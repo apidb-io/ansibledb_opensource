@@ -31,7 +31,7 @@ def apidb(directory,p,apiendpoint,filename):
      }
     data = open(directory + filename, 'rb').read()
     jdata = sanitiseDict(json.loads(data))
-    r = requests.post(url = API_ENDPOINT, headers=headers, data=json.dumps(jdata))
+    r = requests.post(url = API_ENDPOINT, headers=headers, data=json.dumps(jdata),verify=False)
     result = r.text
     statuscode = r.status_code
     meta = {"statuscode" : statuscode, "keys_to_sanitise" : 'key', "endpoint": API_ENDPOINT}

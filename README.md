@@ -195,23 +195,23 @@ To pull out server and fact information directly from the database. Here are som
 
  * Pull out all data:
 
-    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq````
+    ````curl -s https://ansibledb_api_IP_address:5000/api/servers | jq````
 
  * List all servernames, distribution and version:
 
-    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq '[.[] | {name:.ansible_facts.ansible_fqdn, distribution:.ansible_facts.ansible_distribution,  version: .ansible_facts.ansible_distribution_version}]'````
+    ````curl -s https://ansibledb_api_IP_address:5000/api/servers | jq '[.[] | {name:.ansible_facts.ansible_fqdn, distribution:.ansible_facts.ansible_distribution,  version: .ansible_facts.ansible_distribution_version}]'````
 
  * Generate a list of servernames that match a specific fact (in this case ubuntu 18.04):
  
-    ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq --arg INPUT "$INPUT" -r '.[] | select(.ansible_facts.ansible_distribution_version | tostring | contains("18.04")) | (.ansible_facts.ansible_fqdn)'````
+    ````curl -s https://ansibledb_api_IP_address:5000/api/servers | jq --arg INPUT "$INPUT" -r '.[] | select(.ansible_facts.ansible_distribution_version | tostring | contains("18.04")) | (.ansible_facts.ansible_fqdn)'````
 
  * if you've generated local facts, access them like this:
  
-   ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local'````
+   ````curl -s https://ansibledb_api_IP_address:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local'````
  
  * And to get to specific facts:
  
-   ````curl -s http://ansibledb_api_IP_address:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local.local_facts.region'````
+   ````curl -s https://ansibledb_api_IP_address:5000/api/servers | jq -r '.[].ansible_facts.ansible_local.local.local_facts.region'````
 
 
 ---
